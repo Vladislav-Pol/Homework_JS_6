@@ -72,7 +72,7 @@ alert("Текущая дата " + formatDate(new Date()));
 // количество раз, буква 'a'.
 
 let $7text = "aa aba abba abbba abca abea",
-    $7regex = /[a][b]{1,}[a]/gi;
+    $7regex = /ab+a/gi;
 
 alert($7text.match($7regex));
 
@@ -81,7 +81,16 @@ alert($7text.match($7regex));
 //     телефона>). Функция должна возвращать true или false. Используйте
 //     регулярные выражения.
 
-
+function ValidatePhone($phone){
+    let regex = /\+375\s*\(?\s*\d{2,6}\s*\)\s*(\d\W*){5,10}/,
+        flag = regex.test($phone);
+    flag ? alert("Номер " + $phone + " принят") : alert("Формат номера " + $phone + " не подходит");
+    return flag
+}
+let phone;
+do
+    phone = prompt("Введите номер телефона в международном формате\n +375 (код оператора или города) номер телефона", "+375 (29) 123 45 67")
+while (!ValidatePhone(phone))
 
 //     9. Напишите ф-цию строгой проверки адреса эл. почты с учетом следующих
 //     условия:
@@ -92,16 +101,47 @@ alert($7text.match($7regex));
 //     единственными в имени;
 //     - после последней точки и после @, домен верхнего уровня (ru, by, com и т.п.)
 //     не может быть длиной менее 2 и более 11 символов.
-//
-//     Курс «JS».
-//
 //     Функция должна возвращать true или false. Используйте регулярные
 //     выражения.
+
+function ValidateEmail($email){
+    let flag = true,
+        regex1 = /[\w.-]*@[\w.-]*/,
+        regex2 = /[a-z][a-z0-9]{2,}@.*/i,
+        regex3 = /.*@.*\.\w{2,11}$/;
+    if (regex1.test($email)
+        && regex2.test($email)
+        && regex3.test($email))
+        alert("Адрес электронной почты " + $email + " принят")
+    else{
+        flag = false;
+        alert("Формат адреса электронной почты " + $email + " не подходит");
+    }
+    return flag
+}
+
+let email;
+do
+    email = prompt("Введите адрес электронной почты", "test@test.test")
+while (!ValidateEmail(email))
+
 //     10. Напишите ф-цию, которая из полного адреса с параметрами и без,
-//     например: https://tech.onliner.by/2018/04/26/smart-do-200/?
-//     utm_source=main_tile&utm_medium=smartdo200#zag3 , получит адрес
+//     например: https://tech.onliner.by/2018/04/26/smart-do-200/?utm_source=main_tile&utm_medium=smartdo200#zag3 , получит адрес
 //     доменного имени (https://tech.onliner.by), остальную часть адреса без
 //     параметров (/2018/04/26/smart-do-200/), параметры
 //     (utm_source=main_tile&utm_medium=smartdo200) и хеш (#zag3). В адресе
 //     может и не быть каких-либо составляющих. Ф-ция должна возвращать
 //     массив.
+
+let $10regex = /(http[s]?:[\/]{2}[\w.]*)([\w\/-]*)([\?\w=&]*)([#\w]*)/i,
+    $10string = "https://tech.onliner.by/2018/04/26/smart-do-200/?utm_source=main_tile&utm_medium=smartdo200#zag3";
+function ReturnUrlSections(url, regex){
+    let text = "Части URL",
+        array = url.match(regex);
+    for (let i = 1; i < array.length; i++)
+        text += "\n\n" + array[i]
+    alert(text)
+}
+
+ReturnUrlSections($10string, $10regex);
+
