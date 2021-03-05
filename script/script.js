@@ -108,10 +108,12 @@ function ValidateEmail($email){
     let flag = true,
         regex1 = /[\w.-]*@[\w.-]*/,
         regex2 = /^[a-z][a-z0-9]{2,}@.*/i,
-        regex3 = /.*@.*\.\w{2,11}$/;
+        regex3 = /.*@.*\.\w{2,11}$/,
+        regex4 = /^[A-Za-z]([A-Za-z0-9]*[-_.]?[A-Za-z0-9]+)+@[A-Za-z0-9]([A-Za-z0-9]*[-_.]?[A-Za-z0-9]+)+\.[A-Za-z]{2,11}$/;
     if (regex1.test($email)
         && regex2.test($email)
-        && regex3.test($email))
+        && regex3.test($email)
+        && regex4.test($email))
         alert("Адрес электронной почты " + $email + " принят")
     else{
         flag = false;
